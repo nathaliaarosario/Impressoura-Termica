@@ -1,4 +1,4 @@
-![GitHub License](https://img.shields.io/github/license/nathaliaarosario/https%3A%2F%2Fgithub.com%2Fnathaliaarosario%2FImpressoura-Termica)
+![GitHub License](https://img.shields.io/github/license/nathaliaarosario/Impressoura-Termica)
 
 
 
