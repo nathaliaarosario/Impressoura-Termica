@@ -252,7 +252,7 @@ java impressora.Impressora
 
 # 📄 Licença
 
-![GitHub License](https://img.shields.io/github/license/nathaliaarosario/Java)
+![GitHub License](https://img.shields.io/github/license/nathaliaarosario/Impressoura-Termica)
 
 Este projeto está licenciado sob a licença MIT.
 
