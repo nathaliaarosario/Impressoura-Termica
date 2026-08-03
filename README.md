@@ -137,7 +137,7 @@ saida.write("HELLO WORD!\n\n".getBytes("CP850"));
 
 saida.write("SENAC - Tatuapé\n".getBytes("CP850"));
 
-saida.write("Nathalia Alves Rosário\n\n".getBytes("CP850"));
+saida.write("Nathalia\n\n".getBytes("CP850"));
 ```
 
 ---
@@ -194,7 +194,7 @@ saida.write(new byte[] {0x1B, 0x45, 0x01});
 saida.write("SENAC - Tatuapé\n".getBytes("CP850"));
 
 saida.write(new byte[] {0x1B, 0x45, 0x00});
-saida.write("Nathalia Alves Rosário\n\n".getBytes("CP850"));
+saida.write("Nathalia\n\n".getBytes("CP850"));
 
 saida.write(new byte[] {0x1B, 0x64, 0x05});
 saida.write(new byte[] {0x1D, 0x56, 0x00});
