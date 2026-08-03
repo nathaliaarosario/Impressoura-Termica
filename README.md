@@ -1,201 +1,204 @@
-# Impressora Térmica Java
+<p align="center">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" width="120" alt="Java Logo">
+</p>
 
-Projeto desenvolvido em **Java** para comunicação com impressoras térmicas compatíveis com o protocolo **ESC/POS**, permitindo imprimir textos, avançar papel e realizar o corte automático ao final da impressão.
+# 🖨️ Impressora Térmica Java
 
-## Funcionalidades
+Projeto desenvolvido em **Java** com o objetivo de demonstrar a comunicação entre uma aplicação Java e uma impressora térmica utilizando conexão **TCP/IP**. O exemplo mostra como enviar comandos diretamente para a impressora por meio de um `Socket` e um `OutputStream`.
 
-- Impressão de texto
-- Impressão de QR Code (quando suportado)
-- Impressão de imagens
-- Impressão de códigos de barras
-- Avanço de papel
+---
+
+## ✨ Recursos
+
+- Conexão com a impressora via endereço IP
+- Impressão de textos
+- Impressão da data e hora atuais
+- Alteração do tamanho da fonte
+- Alinhamento do texto
+- Impressão em negrito
+- Avanço do papel
 - Corte automático
-- Envio de comandos ESC/POS
-- Compatível com diversas impressoras térmicas
+- Fechamento da conexão com a impressora
 
-## Tecnologias
+---
+
+## 💻 Tecnologias
 
 - Java
-- ESC/POS
-- Java Print Service
-
-## Estrutura do Projeto
-
-```
-src/
-├── Main.java
-├── PrinterService.java
-└── ...
-```
+- Socket TCP/IP
+- OutputStream
 
 ---
 
-# Exemplo de Impressão
+# 🔌 Conectando à impressora
 
 ```java
-PrinterService printer = new PrinterService();
-
-printer.println("================================");
-printer.println("      CUPOM DE TESTE");
-printer.println("================================");
-printer.println("Produto A             R$ 10,00");
-printer.println("Produto B             R$ 20,00");
-printer.println("--------------------------------");
-printer.println("TOTAL                 R$ 30,00");
-
-printer.feed(4);
-printer.cut();
-
-printer.close();
+Socket impressora = new Socket("10.26.49.39", 9100);
+OutputStream saida = impressora.getOutputStream();
 ```
 
 ---
 
-# Imprimindo um texto simples
+# 🚀 Inicializando a impressora
 
 ```java
-PrinterService printer = new PrinterService();
-
-printer.println("Olá Mundo!");
-
-printer.feed(3);
-
-printer.close();
+saida.write(new byte[] {0x1B, 0x40});
 ```
 
 ---
 
-# Avançando o papel
+# 📅 Imprimindo data e hora
 
 ```java
-printer.feed(5);
+LocalDateTime agora = LocalDateTime.now();
+DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+String datahora = "Data: " + agora.format(formato) + "\n\n";
+
+saida.write(datahora.getBytes("CP850"));
 ```
 
-Equivalente ao comando ESC/POS:
+---
+
+# 🔠 Alterando o tamanho da fonte
+
+Fonte ampliada:
 
 ```java
-outputStream.write(new byte[]{
-    0x1B,
-    0x64,
-    0x05
-});
+saida.write(new byte[] {0x1D, 0x21, 0x11});
 ```
 
----
-
-# Corte automático
+Retornar ao tamanho padrão:
 
 ```java
-printer.cut();
+saida.write(new byte[] {0x1D, 0x21, 0x00});
 ```
 
-Comando ESC/POS:
+---
+
+# 📍 Alinhando o texto
+
+Centralizado
 
 ```java
-outputStream.write(new byte[]{
-    0x1D,
-    0x56,
-    0x00
-});
+saida.write(new byte[] {0x1B, 0x61, 0x01});
 ```
 
----
-
-# Corte parcial
+À esquerda
 
 ```java
-outputStream.write(new byte[]{
-    0x1D,
-    0x56,
-    0x01
-});
+saida.write(new byte[] {0x1B, 0x61, 0x00});
 ```
 
----
-
-# Impressão utilizando OutputStream
+À direita
 
 ```java
-OutputStream out = printer.getOutputStream();
-
-out.write("Impressão de teste\n".getBytes());
-
-out.write(new byte[]{
-    0x1B,
-    0x64,
-    0x05
-});
-
-out.write(new byte[]{
-    0x1D,
-    0x56,
-    0x00
-});
-
-out.flush();
-out.close();
+saida.write(new byte[] {0x1B, 0x61, 0x02});
 ```
 
 ---
 
-# Exemplo de Cupom
+# 📝 Impressão em negrito
 
-```text
-================================
-          MERCADO TESTE
-================================
-Produto A             R$ 10,00
-Produto B             R$ 20,00
-Produto C             R$ 30,00
---------------------------------
-TOTAL                 R$ 60,00
-
-Obrigado pela preferência!
-```
-
----
-
-# Impressão de QR Code
+Ativar:
 
 ```java
-printer.printQRCode("https://github.com/nathaliaarosario");
+saida.write(new byte[] {0x1B, 0x45, 0x01});
 ```
 
----
-
-# Impressão de Código de Barras
+Desativar:
 
 ```java
-printer.printBarcode("7891234567890");
+saida.write(new byte[] {0x1B, 0x45, 0x00});
 ```
 
 ---
 
-# Compatibilidade
+# 🖨️ Imprimindo texto
 
-Este projeto pode ser utilizado com impressoras térmicas compatíveis com ESC/POS, incluindo:
+```java
+saida.write("HELLO WORD!\n\n".getBytes("CP850"));
 
-- Epson
-- Elgin
-- Bematech
-- Daruma
-- Control iD
-- POS-58
-- POS-80
-- XPrinter
-- Outras impressoras ESC/POS
+saida.write("SENAC - Tatuapé\n".getBytes("CP850"));
+
+saida.write("Nathalia Alves Rosário\n\n".getBytes("CP850"));
+```
 
 ---
 
-# Requisitos
+# 📄 Avançando o papel
+
+```java
+saida.write(new byte[] {0x1B, 0x64, 0x05});
+```
+
+---
+
+# ✂️ Corte automático
+
+```java
+saida.write(new byte[] {0x1D, 0x56, 0x00});
+```
+
+---
+
+# ✅ Finalizando a impressão
+
+```java
+saida.flush();
+impressora.close();
+```
+
+---
+
+# 📌 Exemplo completo
+
+```java
+Socket impressora = new Socket("10.26.49.39", 9100);
+OutputStream saida = impressora.getOutputStream();
+
+saida.write(new byte[] {0x1B, 0x40});
+
+LocalDateTime agora = LocalDateTime.now();
+DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+String datahora = "Data: " + agora.format(formato) + "\n\n";
+
+saida.write(datahora.getBytes("CP850"));
+
+saida.write(new byte[] {0x1D, 0x21, 0x11});
+saida.write(new byte[] {0x1B, 0x61, 0x01});
+
+saida.write("HELLO WORD!\n\n".getBytes("CP850"));
+
+saida.write(new byte[] {0x1D, 0x21, 0x00});
+saida.write(new byte[] {0x1B, 0x61, 0x00});
+
+saida.write(new byte[] {0x1B, 0x45, 0x01});
+saida.write("SENAC - Tatuapé\n".getBytes("CP850"));
+
+saida.write(new byte[] {0x1B, 0x45, 0x00});
+saida.write("Nathalia Alves Rosário\n\n".getBytes("CP850"));
+
+saida.write(new byte[] {0x1B, 0x64, 0x05});
+saida.write(new byte[] {0x1D, 0x56, 0x00});
+
+saida.flush();
+impressora.close();
+```
+
+---
+
+## ⚙️ Requisitos
 
 - Java 17 ou superior
-- Driver da impressora instalado
-- Impressora compatível com ESC/POS
+- Impressora térmica conectada à rede
+- Endereço IP da impressora
+- Porta TCP da impressora (9100)
 
 ---
 
-# Como executar
+## ▶️ Como executar
 
 Clone o repositório:
 
@@ -203,39 +206,43 @@ Clone o repositório:
 git clone https://github.com/nathaliaarosario/Java.git
 ```
 
-Entre na pasta:
+Acesse a pasta do projeto:
 
 ```bash
-cd Java/impressora_termica
+cd Java/impressora_termica/src
 ```
 
 Compile:
 
 ```bash
-javac Main.java
+javac impressora/Impressora.java
 ```
 
 Execute:
 
 ```bash
-java Main
+java impressora.Impressora
 ```
 
 ---
 
-# Autor
+# 👩‍💻 Autor
 
-Desenvolvido por **Nathalia Alves Rosário**
+**Nathalia Alves Rosário**
 
-GitHub:
-https://github.com/nathaliaarosario
-
-LinkedIn:
-https://www.linkedin.com/in/nathalia-alves-ros%C3%A1rio-01a5a2360/
+- GitHub: https://github.com/nathaliaarosario
 
 ---
 
-# Licença
-![GitHub License](https://img.shields.io/github/license/nathaliaarosario/Impressoura-Termica)
+# 📄 Licença
+
+![GitHub License](https://img.shields.io/github/license/nathaliaarosario/Java)
 
 Este projeto está licenciado sob a licença MIT.
+
+---
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" width="120" alt="Java Logo">
+</p>
+```
