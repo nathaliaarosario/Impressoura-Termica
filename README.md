@@ -6,6 +6,22 @@
 
 Projeto desenvolvido em **Java** com o objetivo de demonstrar a comunicação entre uma aplicação Java e uma impressora térmica utilizando conexão **TCP/IP**. O exemplo mostra como enviar comandos diretamente para a impressora por meio de um `Socket` e um `OutputStream`.
 
+## 📷 Demonstração
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/dc8223be-169a-45eb-ab66-1b61c87922ab"
+       alt="Configuração da Impressora"
+       width="700">
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0e3a90dd-75b6-48d8-aa20-12285489d5c4"
+       alt="Exemplo de Impressão"
+       width="700">
+</p>
+
+
+
 ---
 
 ## ✨ Recursos
