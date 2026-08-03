@@ -257,8 +257,3 @@ java impressora.Impressora
 Este projeto está licenciado sob a licença MIT.
 
 ---
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" width="120" alt="Java Logo">
-</p>
-```
