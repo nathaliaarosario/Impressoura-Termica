@@ -207,7 +207,7 @@ impressora.close();
 
 ## ⚙️ Requisitos
 
-- Java 17 ou superior
+- Java
 - Impressora térmica conectada à rede
 - Endereço IP da impressora
 - Porta TCP da impressora (9100)
